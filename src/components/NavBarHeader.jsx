@@ -1,13 +1,14 @@
 const NavBarHeader = () => {
-    return (
+  return (
     <aside className="nav-bar-header">
-      <img src="assets/logo.png" alt="Logo" />
+      <img src="src\assets\Logo.png" alt="Logo" />
       <nav>
-        <a href="">Inicio</a>
-        <a href="">Iniciar sesion</a>
-        <a href="">Crear cuenta</a>
+
+        <button className="nav-btn">Iniciar sesión</button>
+        <button className="nav-btn">Crear cuenta</button>
       </nav>
     </aside>
-    )
+  )
 }
+
 export default NavBarHeader
