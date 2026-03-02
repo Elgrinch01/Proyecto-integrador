@@ -14,17 +14,3 @@ export default Card;
 
 //Imagen del logo es un ejemplo, se puede cambiar por cualquier imagen que se quiera mostrar en la tarjeta.
 
-/*
-function Card() {
-    return (
-        <article className="card">
-            <section></section>
-            <section>
-                <h3>Titulo</h3>
-            </section>
-
-        </article>
-    )
-
-}
-*/
