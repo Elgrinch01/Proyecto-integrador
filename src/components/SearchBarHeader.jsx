@@ -1,9 +1,9 @@
-const searchBarHeader = () => {
+const SearchBarHeader = () => {
     return(
-    <div className="searchBar_header">
+    <div className="SearchBarHeader">
       <input type="text" placeholder="Busca tu libro favorito " />
     </div>
     )
 }
 
-export default searchBarHeader
+export default SearchBarHeader

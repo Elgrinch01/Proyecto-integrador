@@ -1,6 +1,6 @@
 const NavBarHeader = () => {
     return (
-    <aside className="NavBar_header">
+    <aside className="NavBarHeader">
       <img src="" alt="Logo" />
       <nav>
         <a href="">Inicio</a>
