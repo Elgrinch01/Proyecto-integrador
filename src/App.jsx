@@ -1,5 +1,5 @@
-import Inicio from ".\pages\Inicio.jsx";
-import ".\App.css"
+import Inicio from "./pages/Inicio.jsx"
+import "./App.css";
 
 
 function App() {
