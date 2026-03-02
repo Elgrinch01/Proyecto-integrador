@@ -1,4 +1,4 @@
-const NavBar_header = () => {
+const NavBarHeader = () => {
     return (
     <aside className="NavBar_header">
       <img src="" alt="Logo" />
@@ -10,4 +10,4 @@ const NavBar_header = () => {
     </aside>
     )
 }
-export default NavBar_header
+export default NavBarHeader
