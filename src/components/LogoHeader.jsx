@@ -1,6 +1,6 @@
 const LogoHeader = () => {
     return (
-    <aside className="LogoHeader">
+    <aside className="logo-header">
       <img src="assets/logo.png" alt="Logo" />
     </aside>
     )

@@ -1,6 +1,6 @@
 const SearchBarHeader = () => {
     return(
-    <div className="SearchBarHeader">
+    <div className="search-bar-header">
       <input type="text" placeholder="Busca tu libro favorito " />
     </div>
     )
