@@ -1,16 +1,56 @@
-# React + Vite
+# Sistema Integral de Gestión de Biblioteca
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plataforma digital para administrar libros, usuarios y préstamos eficientemente.
 
-Currently, two official plugins are available:
+## Introducción / Contexto
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- Descripción del problema que se busca resolver:  
+Las bibliotecas tradicionales enfrentan dificultades en la gestión manual de libros, control de inventario y seguimiento de préstamos, lo que puede generar errores, duplicidad de información y desorganización.
 
-## React Compiler
+- Justificación: ¿por qué es relevante? (impacto social, académico, empresarial, etc.)  
+El sistema optimiza los procesos bibliotecarios mediante la digitalización, mejora la experiencia del usuario y garantiza mayor control e integridad en la información almacenada, aportando valor académico y organizacional.
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+- Breve descripción del dominio / temática del proyecto integrador:  
+El proyecto se enfoca en la gestión digital de bibliotecas, permitiendo administrar libros, usuarios, reservas y renovaciones dentro de una estructura relacional que conecta géneros, editoriales y stock disponible.
 
-## Expanding the ESLint configuration
+## Objetivos
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+**Objetivo General**  
+Desarrollar un sistema digital que permita gestionar de forma eficiente libros, usuarios, reservas y renovaciones en una biblioteca.
+
+**Objetivos Específicos**  
+- Diseñar una base de datos relacional que garantice integridad y coherencia de la información.  
+- Implementar un módulo de gestión de libros con clasificación por género y editorial.  
+- Desarrollar un sistema de autenticación de usuarios con control de acceso y seguridad básica.  
+- Permitir la creación, seguimiento y renovación de reservas registrando fechas de préstamo y devolución.  
+- Automatizar el cálculo de la fecha estimada de devolución para optimizar el control de préstamos.  
+
+**Qué se va a desarrollar:**  
+- Módulo de gestión de libros (registro, edición, consulta y control de stock).  
+- Módulo de gestión de usuarios (registro, inicio de sesión y recuperación de acceso).  
+- Control básico de seguridad (intentos fallidos de inicio de sesión).  
+- Módulo de reservas (creación, consulta y modalidad de entrega: retiro o envío a domicilio).  
+- Registro automático de fechas de préstamo y devolución.  
+- Funcionalidad de renovación de reservas asociadas a préstamos existentes.  
+- Base de datos relacional conectando usuarios, libros, reservas, géneros y editoriales.  
+
+**Qué NO se va a desarrollar en esta versión (fuera de alcance):**  
+- Pasarela de pagos en línea.  
+- Integración con sistemas externos de bibliotecas.  
+- Aplicación móvil nativa.  
+- Sistema avanzado de notificaciones por correo o SMS.  
+- Reportes analíticos avanzados con herramientas de inteligencia de negocios.  
+
+## Tecnologías y Herramientas 
+
+- **Herramientas**:  React, vite
+
+
+## Integrantes del Equipo
+
+| Nombre                  | Rol principal              | Usuario GitHub     |
+|-------------------------|----------------------------|--------------------|
+| Mayra Alejandra Alzate Sánchez                | Líder / Backend            | @Malzate1        |
+| Santiago Bohorquez Saldaña                    | Frontend Lead              | @Elgrinch01        |
+| Samuel Díaz Vanegas                           | Backend / Base de datos    | @zamu5555        |
+| Jhonatan Tabares                           | Backend / Base de datos    | @JhonTabar        |
