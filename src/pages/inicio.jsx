@@ -6,7 +6,7 @@ import SearchBarHeader from "../components/SearchBarHeader.jsx";
 
 function Inicio() {
     return (
-        <main className="inicio">
+         <main className="inicio">
 
             <div >
                 <header className="header">
