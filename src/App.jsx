@@ -1,4 +1,4 @@
-import Inicio from "./pages/inicio";
+import Inicio from "./pages/Index";
 import "./App.css";
 
 
