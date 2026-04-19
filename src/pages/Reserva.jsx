@@ -43,25 +43,37 @@ function Reserva() {
         const libro = findLibro()
 
         if (!user) {
-            alert("El usuario no fue encontrado...")
-            return
-        }
-
-        if (!libro) {
-            alert("El libro no fue encontrado...")
-            return
-        }
-
-        if (!getFechaReserva || !getFechaDevolucion) {
-            alert("Por favor completa las fechas de reserva...")
-            return
-        }
-
-        if (!getLugar) {
-            alert("Por favor selecciona el lugar de recogida...")
-            return
-        }
+      redirect("El usuario no fue encontrado...", "/reserva", "error")
+      return
     }
+
+    if (!libro) {
+      redirect("El libro no fue encontrado...", "/reserva", "error")
+      return
+    }
+
+    if (!getFechaReserva || !getFechaDevolucion) {
+      redirect("Por favor completa las fechas de reserva...", "/reserva", "error")
+      return
+    }
+
+    if (!getLugar) {
+      redirect("Por favor selecciona el lugar de recogida...", "/reserva", "error")
+      return
+    }
+
+    const reserva = {
+      usuario: user,
+      libro: libro,
+      fechaReserva: getFechaReserva,
+      fechaDevolucion: getFechaDevolucion,
+      lugar: getLugar,
+      direccion: getLugar === "domicilio" ? getDireccion : null,
+    }
+
+    saveLocalStorage("reserva", reserva)
+    redirect("Reserva realizada con éxito para " + user.fullName, "/Index", "success")
+  }
 
     return (
         <main>
