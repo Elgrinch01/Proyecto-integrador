@@ -1,7 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-const NavBarHeader = () => {
-import { useNavigate } from "react-router-dom";
 
 const NavBarHeader = () => {
   const navigate = useNavigate();

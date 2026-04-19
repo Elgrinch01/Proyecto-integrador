@@ -76,7 +76,7 @@ function Reserva() {
   }
 
     return (
-        <main>
+        <main className="inicio">
             <div>
                 <header className="header">
                     <div>
@@ -136,9 +136,9 @@ function Reserva() {
                         </div>
                         <div>
                             <input
-                                type="checkbox"
+                                type="radio"
                                 id="bordered-checkbox-1"
-                                name="biblioteca"
+                                name="lugar" value="biblioteca"
                                 onChange={(e) => setLugar(e.target.checked ? "biblioteca" : "")}
                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                             />
@@ -148,9 +148,9 @@ function Reserva() {
                         </div>
                         <div>
                             <input
-                                type="checkbox"
+                                type="radio"
                                 id="bordered-checkbox-2"
-                                name="domicilio"
+                                name="lugar" value="domicilio"
                                 onChange={(e) => setLugar(e.target.checked ? "domicilio" : "")}
                                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                             />
