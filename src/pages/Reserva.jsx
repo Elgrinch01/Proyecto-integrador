@@ -58,6 +58,31 @@ function Reserva() {
         redirect("Reserva realizada con éxito para " + user.fullName, "/Index", "success")
     }
 
+    const inputStyle = {
+        width: "100%",
+        padding: "9px 14px",
+        border: "1px solid #ddd",
+        borderRadius: "8px",
+        fontSize: "14px",
+        boxSizing: "border-box",
+        outline: "none",
+        fontFamily: "inherit",
+        color: "#333",
+        backgroundColor: "white",
+    }
+
+    const labelStyle = {
+        display: "block",
+        marginBottom: "6px",
+        fontSize: "13px",
+        color: "#555",
+        fontWeight: "500",
+    }
+
+    const fieldStyle = {
+        marginBottom: "16px",
+    }
+
     return (
         <main className="inicio">
             <div>
@@ -67,119 +92,81 @@ function Reserva() {
                     <SearchBarHeader />
                 </header>
 
-                <section className="flex justify-center px-4 py-10">
-                    <div className="w-full max-w-lg bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-                        <h2 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
+                <section style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    padding: "60px 20px",
+                    minHeight: "60vh",
+                    backgroundColor: "#f3f3f3",
+                }}>
+                    <div style={{
+                        backgroundColor: "white",
+                        borderRadius: "16px",
+                        padding: "40px",
+                        width: "100%",
+                        maxWidth: "500px",
+                        boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
+                    }}>
+                        <h2 style={{ textAlign: "center", marginBottom: "28px", fontWeight: "600", fontSize: "22px", color: "#333", marginTop: 0 }}>
                             Reservar un libro
                         </h2>
 
-                        <div className="space-y-5">
-                            {/* Usuario */}
-                            <div>
-                                <label htmlFor="usuario" className="block mb-1 text-sm font-medium text-gray-600">
-                                    Usuario
-                                </label>
-                                <input
-                                    type="text"
-                                    id="usuario"
-                                    placeholder="Nombre o correo"
-                                    onChange={(e) => setUsuario(e.target.value)}
-                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                                />
-                            </div>
-
-                            {/* Libro */}
-                            <div>
-                                <label htmlFor="libro-reserva" className="block mb-1 text-sm font-medium text-gray-600">
-                                    Libro a reservar
-                                </label>
-                                <input
-                                    type="text"
-                                    id="libro-reserva"
-                                    placeholder="Título del libro"
-                                    onChange={(e) => setLibro(e.target.value)}
-                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                                />
-                            </div>
-
-                            {/* Fechas */}
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label htmlFor="fecha-reserva" className="block mb-1 text-sm font-medium text-gray-600">
-                                        Fecha de reserva
-                                    </label>
-                                    <input
-                                        type="date"
-                                        id="fecha-reserva"
-                                        onChange={(e) => setFechaReserva(e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                                    />
-                                </div>
-                                <div>
-                                    <label htmlFor="devolucion" className="block mb-1 text-sm font-medium text-gray-600">
-                                        Fecha de devolución
-                                    </label>
-                                    <input
-                                        type="date"
-                                        id="devolucion"
-                                        onChange={(e) => setFechaDevolucion(e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                                    />
-                                </div>
-                            </div>
-
-                            {/* Lugar de recogida */}
-                            <div>
-                                <p className="block mb-2 text-sm font-medium text-gray-600">
-                                    Lugar de recogida
-                                </p>
-                                <div className="flex gap-6">
-                                    <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="lugar"
-                                            value="biblioteca"
-                                            onChange={() => setLugar("biblioteca")}
-                                            className="accent-cyan-500"
-                                        />
-                                        Retiro en biblioteca
-                                    </label>
-                                    <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
-                                        <input
-                                            type="radio"
-                                            name="lugar"
-                                            value="domicilio"
-                                            onChange={() => setLugar("domicilio")}
-                                            className="accent-cyan-500"
-                                        />
-                                        A domicilio
-                                    </label>
-                                </div>
-                            </div>
-
-                            {/* Dirección (solo si domicilio) */}
-                            {getLugar === "domicilio" && (
-                                <div>
-                                    <label htmlFor="direccion-recogida" className="block mb-1 text-sm font-medium text-gray-600">
-                                        Dirección de domicilio
-                                    </label>
-                                    <input
-                                        id="direccion-recogida"
-                                        type="text"
-                                        placeholder="Calle 13 #30-45"
-                                        onChange={(e) => setDireccion(e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                                    />
-                                </div>
-                            )}
+                        <div style={fieldStyle}>
+                            <label style={labelStyle}>Usuario</label>
+                            <input type="text" placeholder="Nombre o correo" onChange={(e) => setUsuario(e.target.value)} style={inputStyle} />
                         </div>
 
-                        {/* Botón */}
-                        <div className="mt-8 flex justify-center">
+                        <div style={fieldStyle}>
+                            <label style={labelStyle}>Libro a reservar</label>
+                            <input type="text" placeholder="Título del libro" onChange={(e) => setLibro(e.target.value)} style={inputStyle} />
+                        </div>
+
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
+                            <div>
+                                <label style={labelStyle}>Fecha de reserva</label>
+                                <input type="date" onChange={(e) => setFechaReserva(e.target.value)} style={inputStyle} />
+                            </div>
+                            <div>
+                                <label style={labelStyle}>Fecha de devolución</label>
+                                <input type="date" onChange={(e) => setFechaDevolucion(e.target.value)} style={inputStyle} />
+                            </div>
+                        </div>
+
+                        <div style={fieldStyle}>
+                            <p style={{ ...labelStyle, marginBottom: "10px" }}>Lugar de recogida</p>
+                            <div style={{ display: "flex", gap: "24px" }}>
+                                <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", color: "#444", cursor: "pointer" }}>
+                                    <input type="radio" name="lugar" value="biblioteca" onChange={() => setLugar("biblioteca")} />
+                                    Retiro en biblioteca
+                                </label>
+                                <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", color: "#444", cursor: "pointer" }}>
+                                    <input type="radio" name="lugar" value="domicilio" onChange={() => setLugar("domicilio")} />
+                                    A domicilio
+                                </label>
+                            </div>
+                        </div>
+
+                        {getLugar === "domicilio" && (
+                            <div style={fieldStyle}>
+                                <label style={labelStyle}>Dirección de domicilio</label>
+                                <input type="text" placeholder="Calle 13 #30-45" onChange={(e) => setDireccion(e.target.value)} style={inputStyle} />
+                            </div>
+                        )}
+
+                        <div style={{ marginTop: "28px", display: "flex", justifyContent: "center" }}>
                             <button
                                 type="button"
                                 onClick={enviarReserva}
-                                className="bg-yellow-400 hover:bg-yellow-500 text-white font-medium text-sm px-8 py-2.5 rounded-full focus:outline-none focus:ring-4 focus:ring-yellow-300 transition-colors"
+                                style={{
+                                    backgroundColor: "#FBBF24",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "999px",
+                                    padding: "10px 32px",
+                                    fontSize: "14px",
+                                    fontWeight: "500",
+                                    cursor: "pointer",
+                                }}
                             >
                                 Enviar reserva
                             </button>
