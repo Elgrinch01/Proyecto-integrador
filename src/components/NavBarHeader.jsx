@@ -11,7 +11,7 @@ const NavBarHeader = () => {
       <nav>
         <button 
           className="nav-btn"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/reserva")}
         >
           Reservar
         </button>

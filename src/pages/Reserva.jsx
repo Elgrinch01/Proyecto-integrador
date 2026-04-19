@@ -4,9 +4,12 @@ import SearchBarHeader from '../components/SearchBarHeader'
 import LogoHeader from '../components/LogoHeader'
 import { useEffect, useState } from 'react'
 
+const end_points = {
+    libros: "https://jsonplaceholder.typicode.com/posts",
+    usuarios: "https://jsonplaceholder.typicode.com/users",
+}
 
 function Reserva() {
-
     const [getUsuario, setUsuario] = useState("")
     const [getLibro, setLibro] = useState("")
     const [getFechaReserva, setFechaReserva] = useState("")
@@ -18,169 +21,172 @@ function Reserva() {
 
     function fetchBooks() {
         fetch(end_points.libros)
-            .then((response) => response.json())
-            .then((data) => setLibros(data))
-            .catch((error) => console.log(error))
-
+            .then((r) => r.json()).then((d) => setLibros(d))
+            .catch((e) => console.log(e))
         fetch(end_points.usuarios)
-            .then((response) => response.json())
-            .then((data) => setUsuarios(data))
-            .catch((error) => console.log(error))
+            .then((r) => r.json()).then((d) => setUsuarios(d))
+            .catch((e) => console.log(e))
     }
 
     useEffect(() => { fetchBooks() }, [])
 
-    const findUsuario = () => {
-        return getUsuarios.find((item) => getUsuario === item.fullName || getUsuario === item.email)
-    }
+    const findUsuario = () =>
+        getUsuarios.find((item) => getUsuario === item.fullName || getUsuario === item.email)
 
-    const findLibro = () => {
-        return getLibros.find((item) => getLibro.toLowerCase() === item.titulo?.toLowerCase())
-    }
+    const findLibro = () =>
+        getLibros.find((item) => getLibro.toLowerCase() === item.titulo?.toLowerCase())
 
     function enviarReserva() {
         const user = findUsuario()
         const libro = findLibro()
 
-        if (!user) {
-      redirect("El usuario no fue encontrado...", "/reserva", "error")
-      return
-    }
+        if (!user) { redirect("El usuario no fue encontrado...", "/reserva", "error"); return }
+        if (!libro) { redirect("El libro no fue encontrado...", "/reserva", "error"); return }
+        if (!getFechaReserva || !getFechaDevolucion) { redirect("Por favor completa las fechas de reserva...", "/reserva", "error"); return }
+        if (!getLugar) { redirect("Por favor selecciona el lugar de recogida...", "/reserva", "error"); return }
 
-    if (!libro) {
-      redirect("El libro no fue encontrado...", "/reserva", "error")
-      return
-    }
+        const reserva = {
+            usuario: user,
+            libro: libro,
+            fechaReserva: getFechaReserva,
+            fechaDevolucion: getFechaDevolucion,
+            lugar: getLugar,
+            direccion: getLugar === "domicilio" ? getDireccion : null,
+        }
 
-    if (!getFechaReserva || !getFechaDevolucion) {
-      redirect("Por favor completa las fechas de reserva...", "/reserva", "error")
-      return
+        saveLocalStorage("reserva", reserva)
+        redirect("Reserva realizada con éxito para " + user.fullName, "/Index", "success")
     }
-
-    if (!getLugar) {
-      redirect("Por favor selecciona el lugar de recogida...", "/reserva", "error")
-      return
-    }
-
-    const reserva = {
-      usuario: user,
-      libro: libro,
-      fechaReserva: getFechaReserva,
-      fechaDevolucion: getFechaDevolucion,
-      lugar: getLugar,
-      direccion: getLugar === "domicilio" ? getDireccion : null,
-    }
-
-    saveLocalStorage("reserva", reserva)
-    redirect("Reserva realizada con éxito para " + user.fullName, "/Index", "success")
-  }
 
     return (
         <main className="inicio">
             <div>
                 <header className="header">
-                    <div>
-                        <LogoHeader />
-                    </div>
+                    <div><LogoHeader /></div>
                     <NavBarHeader />
                     <SearchBarHeader />
                 </header>
-                <section>
-                    <form>
-                        <div className="mb-4">
-                            <label htmlFor="usuario" className="block mb-2 text-sm text-gray-600">Usuario</label>
-                            <input
-                                type="text"
-                                id="usuario"
-                                name="usuario"
-                                onChange={(e) => setUsuario(e.target.value)}
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                                required
-                            />
+
+                <section className="flex justify-center px-4 py-10">
+                    <div className="w-full max-w-lg bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
+                        <h2 className="text-2xl font-semibold text-gray-700 mb-6 text-center">
+                            Reservar un libro
+                        </h2>
+
+                        <div className="space-y-5">
+                            {/* Usuario */}
+                            <div>
+                                <label htmlFor="usuario" className="block mb-1 text-sm font-medium text-gray-600">
+                                    Usuario
+                                </label>
+                                <input
+                                    type="text"
+                                    id="usuario"
+                                    placeholder="Nombre o correo"
+                                    onChange={(e) => setUsuario(e.target.value)}
+                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                                />
+                            </div>
+
+                            {/* Libro */}
+                            <div>
+                                <label htmlFor="libro-reserva" className="block mb-1 text-sm font-medium text-gray-600">
+                                    Libro a reservar
+                                </label>
+                                <input
+                                    type="text"
+                                    id="libro-reserva"
+                                    placeholder="Título del libro"
+                                    onChange={(e) => setLibro(e.target.value)}
+                                    className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                                />
+                            </div>
+
+                            {/* Fechas */}
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label htmlFor="fecha-reserva" className="block mb-1 text-sm font-medium text-gray-600">
+                                        Fecha de reserva
+                                    </label>
+                                    <input
+                                        type="date"
+                                        id="fecha-reserva"
+                                        onChange={(e) => setFechaReserva(e.target.value)}
+                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor="devolucion" className="block mb-1 text-sm font-medium text-gray-600">
+                                        Fecha de devolución
+                                    </label>
+                                    <input
+                                        type="date"
+                                        id="devolucion"
+                                        onChange={(e) => setFechaDevolucion(e.target.value)}
+                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Lugar de recogida */}
+                            <div>
+                                <p className="block mb-2 text-sm font-medium text-gray-600">
+                                    Lugar de recogida
+                                </p>
+                                <div className="flex gap-6">
+                                    <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                                        <input
+                                            type="radio"
+                                            name="lugar"
+                                            value="biblioteca"
+                                            onChange={() => setLugar("biblioteca")}
+                                            className="accent-cyan-500"
+                                        />
+                                        Retiro en biblioteca
+                                    </label>
+                                    <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
+                                        <input
+                                            type="radio"
+                                            name="lugar"
+                                            value="domicilio"
+                                            onChange={() => setLugar("domicilio")}
+                                            className="accent-cyan-500"
+                                        />
+                                        A domicilio
+                                    </label>
+                                </div>
+                            </div>
+
+                            {/* Dirección (solo si domicilio) */}
+                            {getLugar === "domicilio" && (
+                                <div>
+                                    <label htmlFor="direccion-recogida" className="block mb-1 text-sm font-medium text-gray-600">
+                                        Dirección de domicilio
+                                    </label>
+                                    <input
+                                        id="direccion-recogida"
+                                        type="text"
+                                        placeholder="Calle 13 #30-45"
+                                        onChange={(e) => setDireccion(e.target.value)}
+                                        className="w-full px-4 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-cyan-400"
+                                    />
+                                </div>
+                            )}
                         </div>
-                        <div className="mb-4">
-                            <label htmlFor="libro-reserva" className="block mb-2 text-sm text-gray-600">Libro a reservar</label>
-                            <input
-                                type="text"
-                                id="libro-reserva"
-                                name="libro-reserva"
-                                onChange={(e) => setLibro(e.target.value)}
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="fecha-reserva" className="block mb-2 text-sm text-gray-600">Fecha de reserva</label>
-                            <input
-                                type="date"
-                                id="fecha-reserva"
-                                name="fecha-reserva"
-                                onChange={(e) => setFechaReserva(e.target.value)}
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label htmlFor="devolucion" className="block mb-2 text-sm text-gray-600">Fecha devolución</label>
-                            <input
-                                type="date"
-                                id="devolucion"
-                                name="devolucion"
-                                onChange={(e) => setFechaDevolucion(e.target.value)}
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                                required
-                            />
-                        </div>
-                        <div className="space-y-1">
-                            <label className="block mb-2 text-sm text-gray-600">Lugar de Recogida</label>
-                        </div>
-                        <div>
-                            <input
-                                type="radio"
-                                id="bordered-checkbox-1"
-                                name="lugar" value="biblioteca"
-                                onChange={(e) => setLugar(e.target.checked ? "biblioteca" : "")}
-                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                            />
-                            <label htmlFor="bordered-checkbox-1" className="rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                                Retiro en biblioteca
-                            </label>
-                        </div>
-                        <div>
-                            <input
-                                type="radio"
-                                id="bordered-checkbox-2"
-                                name="lugar" value="domicilio"
-                                onChange={(e) => setLugar(e.target.checked ? "domicilio" : "")}
-                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                            />
-                            <label htmlFor="bordered-checkbox-2" className="rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500">
-                                A domicilio
-                            </label>
-                        </div>
-                        <div className="space-y-1 pt-4">
-                            <label htmlFor="direccion-recogida" className="block mb-2 text-sm text-gray-600">
-                                Dirección de domicilio
-                            </label>
-                            <input
-                                id="direccion-recogida"
-                                type="text"
-                                placeholder="Calle 13 #30-45"
-                                onChange={(e) => setDireccion(e.target.value)}
-                                className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-cyan-500"
-                            />
-                        </div>
-                        <div className="pt-6 mt-4 flex justify-center">
+
+                        {/* Botón */}
+                        <div className="mt-8 flex justify-center">
                             <button
                                 type="button"
-                                onClick={() => enviarReserva()}
-                                className="text-white bg-yellow-400 hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300 font-medium rounded-full text-sm px-5 py-2.5 text-center me-2 mb-2 dark:focus:ring-yellow-900"
+                                onClick={enviarReserva}
+                                className="bg-yellow-400 hover:bg-yellow-500 text-white font-medium text-sm px-8 py-2.5 rounded-full focus:outline-none focus:ring-4 focus:ring-yellow-300 transition-colors"
                             >
-                                Enviar
+                                Enviar reserva
                             </button>
                         </div>
-                    </form>
+                    </div>
                 </section>
+
                 <Footer />
             </div>
         </main>
