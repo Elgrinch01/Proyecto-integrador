@@ -1,6 +1,6 @@
 import Footer from '../components/Footer'
 import NavBarHeader from '../components/NavBarHeader'
-import SearchBarHeader from '../components/SearchBarHeader'
+//import SearchBarHeader from '../components/SearchBarHeader'
 import LogoHeader from '../components/LogoHeader'
 import { useEffect, useState } from 'react'
 
@@ -89,7 +89,7 @@ function Reserva() {
                 <header className="header">
                     <div><LogoHeader /></div>
                     <NavBarHeader />
-                    <SearchBarHeader />
+                    
                 </header>
 
                 <section style={{
