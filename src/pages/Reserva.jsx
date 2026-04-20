@@ -3,6 +3,8 @@ import NavBarHeader from '../components/NavBarHeader'
 //import SearchBarHeader from '../components/SearchBarHeader'
 import LogoHeader from '../components/LogoHeader'
 import { useEffect, useState } from 'react'
+import { saveLocalStorage, getLocalStorage } from "../helpers/local-storage"
+import { redirect } from "../helpers/alerts"
 
 const end_points = {
     libros: "https://jsonplaceholder.typicode.com/posts",
@@ -28,13 +30,24 @@ function Reserva() {
             .catch((e) => console.log(e))
     }
 
-    useEffect(() => { fetchBooks() }, [])
+      useEffect(() => {
+    const storedUser = getLocalStorage("user")
+    const storedToken = getLocalStorage("token")
+
+    if (!storedUser || !storedToken || storedUser.token !== storedToken) {
+      redirect("Debes iniciar sesión para hacer una reserva", "/", "error")
+      return
+    }
+
+    setUsuario(storedUser.name || storedUser.email)
+    fetchBooks()
+  }, [])
 
     const findUsuario = () =>
-        getUsuarios.find((item) => getUsuario === item.fullName || getUsuario === item.email)
+        getUsuarios.find((item) => getUsuario === item.name || getUsuario === item.email)
 
     const findLibro = () =>
-        getLibros.find((item) => getLibro.toLowerCase() === item.titulo?.toLowerCase())
+        getLibros.find((item) => getLibro.toLowerCase() === item.title?.toLowerCase())
 
     function enviarReserva() {
         const user = findUsuario()
