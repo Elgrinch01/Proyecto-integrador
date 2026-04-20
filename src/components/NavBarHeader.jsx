@@ -8,11 +8,18 @@ const NavBarHeader = () => {
       <img src="/src/assets/Logo.png" alt="Logo" />
 
       <nav>
-        <button 
+        <button
           className="nav-btn"
           onClick={() => navigate("/reserva")}
         >
           Reservar
+        </button>
+
+        <button
+          className="nav-btn"
+          onClick={() => navigate("/login")}
+        >
+          Iniciar Sesion
         </button>
       </nav>
     </aside>

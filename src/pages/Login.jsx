@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { end_points } from "../services/api";
 import { redirect } from "../helpers/alerts";
 
+
 const Login = () => {
   const [getEmail, setEmail] = useState("");
   const [getPassword, setPassword] = useState("");
@@ -62,7 +63,7 @@ const Login = () => {
             singIn();
           }}
         >
-          {/* EMAIL */}
+          
           <div className="space-y-2">
             <label className="block text-sm text-gray-400">
               Correo
