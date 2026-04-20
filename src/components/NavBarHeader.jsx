@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-
 const NavBarHeader = () => {
   const navigate = useNavigate();
 
@@ -20,4 +19,4 @@ const NavBarHeader = () => {
   );
 };
 
-export default NavBarHeader
+export default NavBarHeader;
