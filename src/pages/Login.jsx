@@ -26,7 +26,7 @@ const Login = () => {
     );
   }
 
-  function singIn() {
+  function signIn() {
     const user = findUser();
 
     if (user) {
@@ -60,7 +60,7 @@ const Login = () => {
           className="space-y-8"
           onSubmit={(e) => {
             e.preventDefault();
-            singIn();
+            signIn();
           }}
         >
           
