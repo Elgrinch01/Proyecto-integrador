@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { end_points } from "../services/api";
 import { redirect } from "../helpers/alerts";
+import { generateToken } from "../helpers/token";
+import { saveLocalStorage, getLocalStorage, removeLocalStorage } from "../helpers/local-storage";
 
 const Login = () => {
   const [getEmail, setEmail] = useState("");
@@ -15,7 +17,14 @@ const Login = () => {
   }
 
   useEffect(() => {
-    fetchUsers();
+    const storedUser = getLocalStorage("user");
+    const storedToken = getLocalStorage("token");
+
+    if (storedUser && storedToken && storedUser.token === storedToken) {
+      redirect(storedUser.fullName + " ya tiene sesión activa", "/Index", "success");
+    } else {
+      fetchUsers();
+    }
   }, []);
 
   function findUser() {
@@ -25,24 +34,16 @@ const Login = () => {
     );
   }
 
-  function singIn() {
+  function signIn() {
     const user = findUser();
-
     if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-
-      redirect(
-        user.fullName + " Bienvenido al sistema",
-        "/Index",
-        "success"
-      );
-
+      const token = generateToken();
+      const userWithToken = { ...user, token };
+      saveLocalStorage("user", userWithToken);
+      saveLocalStorage("token", token);
+      redirect(user.fullName + " Bienvenido al sistema", "/Index", "success");
     } else {
-      redirect(
-        "El correo o la contraseña son incorrectos",
-        "/",
-        "error"
-      );
+      redirect("El correo o la contraseña son incorrectos", "/", "error");
     }
   }
 
@@ -59,7 +60,7 @@ const Login = () => {
           className="space-y-8"
           onSubmit={(e) => {
             e.preventDefault();
-            singIn();
+            signIn();
           }}
         >
           {/* EMAIL */}
