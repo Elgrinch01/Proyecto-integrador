@@ -10,9 +10,9 @@ const NavBarHeader = () => {
       <nav>
         <button 
           className="nav-btn"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/reserva")}
         >
-          Iniciar sesión
+          Reservar
         </button>
       </nav>
     </aside>

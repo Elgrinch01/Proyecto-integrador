@@ -1,11 +1,11 @@
 import { createBrowserRouter } from "react-router-dom";
-import Index from "../pages/Index";
-import Login from "../pages/Login";
+import Index from "../pages"
+import Reserva from "../pages"
 
-export const routerApp = createBrowserRouter([
+export const routerApp = createBrowserRouter ([
   {
     path: "/",
-    element: <Login />,
+    element: <Reserva />,
   },
   {
     path: "/index",
