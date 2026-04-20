@@ -35,7 +35,7 @@ function Reserva() {
     const storedToken = getLocalStorage("token")
 
     if (!storedUser || !storedToken || storedUser.token !== storedToken) {
-      redirect("Debes iniciar sesión para hacer una reserva", "/", "error")
+      redirect("Debes iniciar sesión para hacer una reserva", "/login", "error")
       return
     }
 
@@ -68,7 +68,7 @@ function Reserva() {
         }
 
         saveLocalStorage("reserva", reserva)
-        redirect("Reserva realizada con éxito para " + user.fullName, "/Index", "success")
+        redirect("Reserva realizada con éxito para " + user.fullName, "/index", "success")
     }
 
     const inputStyle = {
