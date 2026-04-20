@@ -3,8 +3,9 @@ import LogoHeader from "../components/LogoHeader.jsx";
 import NavBarHeader from "../components/NavBarHeader.jsx";
 import Card from "../components/Card.jsx";
 import SearchBarHeader from "../components/SearchBarHeader.jsx";
+import "../App.css"
 
-function Inicio() {
+function Index() {
     return (
           <main className="inicio">
 
@@ -28,4 +29,4 @@ function Inicio() {
     )
 }
 
-export default Inicio 
+export default Index
