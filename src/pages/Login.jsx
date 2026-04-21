@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { end_points } from "../services/api";
 import { redirect } from "../helpers/alerts";
+import { generateToken } from "../helpers/token";
+import { saveLocalStorage, getLocalStorage, removeLocalStorage } from "../helpers/local-storage";
 import Footer from "../components/Footer.jsx";
 import NavBarHeader from "../components/NavBarHeader.jsx";
 
@@ -18,7 +20,14 @@ const Login = () => {
   }
 
   useEffect(() => {
-    fetchUsers();
+    const storedUser = getLocalStorage("user");
+    const storedToken = getLocalStorage("token");
+
+    if (storedUser && storedToken && storedUser.token === storedToken) {
+      redirect(storedUser.name + " ya tiene sesión activa", "/index", "success");
+    } else {
+      fetchUsers();
+    }
   }, []);
 
   function findUser() {
@@ -30,22 +39,18 @@ const Login = () => {
 
   function signIn() {
     const user = findUser();
-
     if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
+      const token = generateToken();
+      const userWithToken = { ...user, token };
+      saveLocalStorage("user", userWithToken);
+      saveLocalStorage("token", token);
 
-      redirect(
-        user.fullName + " Bienvenido al sistema",
-        "/Index",
-        "success"
-      );
+    console.log("Saved user:", getLocalStorage("user")) //temporary
+    console.log("Saved token:", getLocalStorage("token"))
 
+      redirect(user.name + " Bienvenido al sistema", "/index", "success");
     } else {
-      redirect(
-        "El correo o la contraseña son incorrectos",
-        "/",
-        "error"
-      );
+      redirect("El correo o la contraseña son incorrectos", "error");
     }
   }
 
