@@ -71,115 +71,102 @@ function Reserva() {
         redirect("Reserva realizada con éxito para " + user.fullName, "/index", "success")
     }
 
-    const inputStyle = {
-        width: "100%",
-        padding: "9px 14px",
-        border: "1px solid #ddd",
-        borderRadius: "8px",
-        fontSize: "14px",
-        boxSizing: "border-box",
-        outline: "none",
-        fontFamily: "inherit",
-        color: "#333",
-        backgroundColor: "white",
-    }
-
-    const labelStyle = {
-        display: "block",
-        marginBottom: "6px",
-        fontSize: "13px",
-        color: "#555",
-        fontWeight: "500",
-    }
-
-    const fieldStyle = {
-        marginBottom: "16px",
-    }
-
     return (
-        <main className="inicio">
-            <div>
+        <main className="min-h-screen flex flex-col bg-white bg-[radial-gradient(circle_at_top,_#f8fafc_0%,_#ffffff_45%,_#f3f4f6_100%)]">
+            <div className="flex-1 flex flex-col">
                 <header className="header">
                     <div><LogoHeader /></div>
                     <NavBarHeader />
-                    
                 </header>
 
-                <section style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    padding: "60px 20px",
-                    minHeight: "60vh",
-                    backgroundColor: "#f3f3f3",
-                }}>
-                    <div style={{
-                        backgroundColor: "white",
-                        borderRadius: "16px",
-                        padding: "40px",
-                        width: "100%",
-                        maxWidth: "500px",
-                        boxShadow: "0 2px 12px rgba(0,0,0,0.06)",
-                    }}>
-                        <h2 style={{ textAlign: "center", marginBottom: "28px", fontWeight: "600", fontSize: "22px", color: "#333", marginTop: 0 }}>
+                <section className="flex-1 flex items-center justify-center px-4 py-10">
+                    <div className="w-full max-w-xl rounded-2xl border border-gray-200 bg-white/90 px-6 py-8 shadow-sm backdrop-blur-sm md:px-8">
+                        <h2 className="text-center text-4xl font-bold text-gray-900 mb-10">
                             Reservar un libro
                         </h2>
 
-                        <div style={fieldStyle}>
-                            <label style={labelStyle}>Usuario</label>
-                            <input type="text" placeholder="Nombre o correo" onChange={(e) => setUsuario(e.target.value)} style={inputStyle} />
+                        <div className="space-y-1.5 mb-4">
+                            <label className="block text-[14px] font-semibold text-[#0f1111]">Usuario</label>
+                            <input
+                                type="text"
+                                placeholder="Nombre o correo"
+                                onChange={(e) => setUsuario(e.target.value)}
+                                className="w-full h-11 rounded-md border border-[#a6a6a6] bg-white px-3 text-[15px] text-[#0f1111] placeholder:text-gray-400 shadow-[inset_0_1px_2px_rgba(15,17,17,0.08)] transition focus:outline-none focus:border-[#e77600] focus:ring-3 focus:ring-[#fbd8b4]"
+                            />
                         </div>
 
-                        <div style={fieldStyle}>
-                            <label style={labelStyle}>Libro a reservar</label>
-                            <input type="text" placeholder="Título del libro" onChange={(e) => setLibro(e.target.value)} style={inputStyle} />
+                        <div className="space-y-1.5 mb-4">
+                            <label className="block text-[14px] font-semibold text-[#0f1111]">Libro a reservar</label>
+                            <input
+                                type="text"
+                                placeholder="Titulo del libro"
+                                onChange={(e) => setLibro(e.target.value)}
+                                className="w-full h-11 rounded-md border border-[#a6a6a6] bg-white px-3 text-[15px] text-[#0f1111] placeholder:text-gray-400 shadow-[inset_0_1px_2px_rgba(15,17,17,0.08)] transition focus:outline-none focus:border-[#e77600] focus:ring-3 focus:ring-[#fbd8b4]"
+                            />
                         </div>
 
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "16px", marginBottom: "16px" }}>
-                            <div>
-                                <label style={labelStyle}>Fecha de reserva</label>
-                                <input type="date" onChange={(e) => setFechaReserva(e.target.value)} style={inputStyle} />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div className="space-y-1.5">
+                                <label className="block text-[14px] font-semibold text-[#0f1111]">Fecha de reserva</label>
+                                <input
+                                    type="date"
+                                    onChange={(e) => setFechaReserva(e.target.value)}
+                                    className="w-full h-11 rounded-md border border-[#a6a6a6] bg-white px-3 text-[15px] text-[#0f1111] shadow-[inset_0_1px_2px_rgba(15,17,17,0.08)] transition focus:outline-none focus:border-[#e77600] focus:ring-3 focus:ring-[#fbd8b4]"
+                                />
                             </div>
-                            <div>
-                                <label style={labelStyle}>Fecha de devolución</label>
-                                <input type="date" onChange={(e) => setFechaDevolucion(e.target.value)} style={inputStyle} />
+                            <div className="space-y-1.5">
+                                <label className="block text-[14px] font-semibold text-[#0f1111]">Fecha de devolucion</label>
+                                <input
+                                    type="date"
+                                    onChange={(e) => setFechaDevolucion(e.target.value)}
+                                    className="w-full h-11 rounded-md border border-[#a6a6a6] bg-white px-3 text-[15px] text-[#0f1111] shadow-[inset_0_1px_2px_rgba(15,17,17,0.08)] transition focus:outline-none focus:border-[#e77600] focus:ring-3 focus:ring-[#fbd8b4]"
+                                />
                             </div>
                         </div>
 
-                        <div style={fieldStyle}>
-                            <p style={{ ...labelStyle, marginBottom: "10px" }}>Lugar de recogida</p>
-                            <div style={{ display: "flex", gap: "24px" }}>
-                                <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", color: "#444", cursor: "pointer" }}>
-                                    <input type="radio" name="lugar" value="biblioteca" onChange={() => setLugar("biblioteca")} />
+                        <div className="space-y-2 mb-4">
+                            <p className="text-[14px] font-semibold text-[#0f1111]">Lugar de recogida</p>
+                            <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
+                                <label className="inline-flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="lugar"
+                                        value="biblioteca"
+                                        onChange={() => setLugar("biblioteca")}
+                                        className="h-4 w-4 accent-amber-500"
+                                    />
                                     Retiro en biblioteca
                                 </label>
-                                <label style={{ display: "flex", alignItems: "center", gap: "8px", fontSize: "14px", color: "#444", cursor: "pointer" }}>
-                                    <input type="radio" name="lugar" value="domicilio" onChange={() => setLugar("domicilio")} />
+                                <label className="inline-flex items-center gap-2 text-[14px] text-gray-700 cursor-pointer">
+                                    <input
+                                        type="radio"
+                                        name="lugar"
+                                        value="domicilio"
+                                        onChange={() => setLugar("domicilio")}
+                                        className="h-4 w-4 accent-amber-500"
+                                    />
                                     A domicilio
                                 </label>
                             </div>
                         </div>
 
                         {getLugar === "domicilio" && (
-                            <div style={fieldStyle}>
-                                <label style={labelStyle}>Dirección de domicilio</label>
-                                <input type="text" placeholder="Calle 13 #30-45" onChange={(e) => setDireccion(e.target.value)} style={inputStyle} />
+                            <div className="space-y-1.5 mb-4">
+                                <label className="block text-[14px] font-semibold text-[#0f1111]">Direccion de domicilio</label>
+                                <input
+                                    type="text"
+                                    placeholder="Calle 13 #30-45"
+                                    onChange={(e) => setDireccion(e.target.value)}
+                                    className="w-full h-11 rounded-md border border-[#a6a6a6] bg-white px-3 text-[15px] text-[#0f1111] placeholder:text-gray-400 shadow-[inset_0_1px_2px_rgba(15,17,17,0.08)] transition focus:outline-none focus:border-[#e77600] focus:ring-3 focus:ring-[#fbd8b4]"
+                                />
                             </div>
                         )}
 
-                        <div style={{ marginTop: "28px", display: "flex", justifyContent: "center" }}>
+                        <div className="mt-10 flex justify-center">
                             <button
                                 type="button"
                                 onClick={enviarReserva}
-                                style={{
-                                    backgroundColor: "#FBBF24",
-                                    color: "white",
-                                    border: "none",
-                                    borderRadius: "999px",
-                                    padding: "10px 32px",
-                                    fontSize: "14px",
-                                    fontWeight: "500",
-                                    cursor: "pointer",
-                                }}
+                                className="w-full md:w-auto md:min-w-[300px] py-5 px-8 text-2xl rounded-2xl border border-[#f0c14b] bg-gradient-to-b from-[#ffe082] to-[#ffcc4d] text-[#111827] font-bold shadow-md shadow-amber-200/70 transition-all duration-300 hover:-translate-y-0.5 hover:from-[#ffd760] hover:to-[#f6be2d] hover:shadow-lg hover:shadow-amber-300/70 focus:outline-none focus:ring-4 focus:ring-amber-200 active:translate-y-0"
                             >
                                 Enviar reserva
                             </button>

@@ -29,6 +29,29 @@
   gap: 15px;
 }
 
+.nav-bar-search {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  padding: 0 16px;
+}
+
+.nav-bar-search input {
+  width: min(100%, 520px);
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  font-size: 15px;
+  outline: none;
+  background-color: #ffffff;
+  color: #333333;
+  transition: border-color 0.3s ease;
+}
+
+.nav-bar-search input:focus {
+  border-color: #3b82f6;
+}
+
 .nav-btn {
   background-color: #8b8c8e;
   color: #ffffff;
@@ -161,4 +184,14 @@
 
 .footer ul li {
   font-size: 14px;
+}
+
+.inicio {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.inicio-content {
+  flex: 1;
 }
