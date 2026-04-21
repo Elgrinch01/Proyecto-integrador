@@ -19,6 +19,7 @@ const NavBarHeader = ({ hideButtons = false, showSearch = false }) => {
   function handleSessionButton() {
     if (isLoggedIn) {
       localStorage.removeItem("user");
+      localStorage.removeItem("token");
       setIsLoggedIn(false);
       navigate("/login");
       return;
