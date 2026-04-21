@@ -1,7 +1,31 @@
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const NavBarHeader = ({ hideButtons = false, showSearch = false }) => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useState(
+    () => !!localStorage.getItem("user")
+  );
+
+  useEffect(() => {
+    const refreshSession = () => setIsLoggedIn(!!localStorage.getItem("user"));
+
+    refreshSession();
+    window.addEventListener("storage", refreshSession);
+
+    return () => window.removeEventListener("storage", refreshSession);
+  }, []);
+
+  function handleSessionButton() {
+    if (isLoggedIn) {
+      localStorage.removeItem("user");
+      setIsLoggedIn(false);
+      navigate("/login");
+      return;
+    }
+
+    navigate("/login");
+  }
 
   return (
     <aside className="nav-bar-header">
@@ -24,9 +48,9 @@ const NavBarHeader = ({ hideButtons = false, showSearch = false }) => {
 
           <button
             className="nav-btn"
-            onClick={() => navigate("/login")}
+            onClick={handleSessionButton}
           >
-            Iniciar Sesion
+            {isLoggedIn ? "Cerrar Sesion" : "Iniciar Sesion"}
           </button>
         </nav>
       )}
