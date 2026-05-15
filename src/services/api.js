@@ -1,4 +1,4 @@
-const URL_BASE = `https://app-gestion-candidatos-am-api.onrender.com/`
+const URL_BASE = `http://localhost:8080/`
 export let end_points = {
-    users: URL_BASE + "users"
+    usuarios: URL_BASE + "usuarios"
 }

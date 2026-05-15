@@ -2,116 +2,176 @@ import React, { useState, useEffect } from "react";
 import { end_points } from "../services/api";
 import { redirect } from "../helpers/alerts";
 import { generateToken } from "../helpers/token";
-import { saveLocalStorage, getLocalStorage, removeLocalStorage } from "../helpers/local-storage";
+import {
+  saveLocalStorage,
+  getLocalStorage
+} from "../helpers/local-storage";
+
 import Footer from "../components/Footer.jsx";
 import NavBarHeader from "../components/NavBarHeader.jsx";
 
-
 const Login = () => {
+
   const [getEmail, setEmail] = useState("");
-  const [getPassword, setPassword] = useState("");
+  const [getDocumento, setDocumento] = useState("");
   const [getUsers, setUsers] = useState([]);
 
   function fetchUsers() {
-    fetch(end_points.users)
+
+    fetch(end_points.usuarios)
       .then((response) => response.json())
       .then((data) => setUsers(data))
       .catch((error) => console.log(error));
   }
 
   useEffect(() => {
+
     const storedUser = getLocalStorage("user");
     const storedToken = getLocalStorage("token");
 
-    if (storedUser && storedToken && storedUser.token === storedToken) {
-      redirect(storedUser.name + " ya tiene sesión activa", "/index", "success");
+    if (
+      storedUser &&
+      storedToken &&
+      storedUser.token === storedToken
+    ) {
+
+      redirect(
+        storedUser.nombre + " ya tiene sesión activa",
+        "/index",
+        "success"
+      );
+
     } else {
+
       fetchUsers();
     }
+
   }, []);
 
   function findUser() {
+
     return getUsers.find(
       (item) =>
-        getEmail === item.email && getPassword === item.password
+        getEmail === item.correo &&
+        getDocumento === item.documento
     );
   }
 
   function signIn() {
+
     const user = findUser();
+
     if (user) {
+
       const token = generateToken();
-      const userWithToken = { ...user, token };
+
+      const userWithToken = {
+        ...user,
+        token
+      };
+
       saveLocalStorage("user", userWithToken);
       saveLocalStorage("token", token);
 
-    console.log("Saved user:", getLocalStorage("user")) //temporary
-    console.log("Saved token:", getLocalStorage("token"))
+      redirect(
+        user.nombre + " Bienvenido al sistema",
+        "/index",
+        "success"
+      );
 
-      redirect(user.name + " Bienvenido al sistema", "/index", "success");
     } else {
-      redirect("El correo o la contraseña son incorrectos", "error");
+
+      redirect(
+        "El correo o documento son incorrectos",
+        "error"
+      );
     }
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-white bg-[radial-gradient(circle_at_top,_#f8fafc_0%,_#ffffff_45%,_#f3f4f6_100%)]">
+
+    <div className="min-h-screen flex flex-col bg-[#f8f6f1] overflow-hidden">
+
       <NavBarHeader hideButtons />
 
-      <div className="flex-1 flex items-center justify-center px-4 py-10">
-        <div className="w-full max-w-lg px-6">
-          <h2 className="text-center text-4xl font-bold text-gray-900 mb-12">
-            Iniciar sesión
-          </h2>
+      <div className="flex-1 flex items-center justify-center px-6 py-16 relative">
+
+        <div className="absolute top-[-120px] right-[-120px] w-[420px] h-[420px] rounded-full bg-black/5 blur-3xl"></div>
+
+        <div className="w-full max-w-md relative z-10">
+
+          <div className="mb-10 text-center">
+
+            <span className="inline-block px-5 py-2 rounded-full bg-white shadow-md text-sm font-semibold text-[#111111] mb-6">
+              Descrubre historias
+            </span>
+
+            <h2 className="text-5xl font-black text-[#111111] leading-tight mb-4">
+              Bienvenido
+            </h2>
+
+            <p className="text-[#666666] text-base leading-7">
+              Ingresa para acceder a tus reservas,
+              libros favoritos y recomendaciones.
+            </p>
+
+          </div>
 
           <form
-            className="space-y-8"
+            className="bg-white rounded-[32px] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-black/5 space-y-7"
             onSubmit={(e) => {
               e.preventDefault();
               signIn();
             }}
           >
-            
-            <div className="space-y-1.5">
-              <label className="block text-[14px] font-semibold text-[#0f1111]">
-                Correo
+
+            <div>
+
+              <label className="block text-sm font-semibold text-[#111111] mb-3">
+                Correo electrónico
               </label>
+
               <input
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 placeholder="ejemplo@email.com"
-                className="w-full h-11 rounded-md border border-[#a6a6a6] bg-white px-3 text-[15px] text-[#0f1111] placeholder:text-gray-400 shadow-[inset_0_1px_2px_rgba(15,17,17,0.08)] transition focus:outline-none focus:border-[#e77600] focus:ring-3 focus:ring-[#fbd8b4]"
+                className="w-full h-14 px-5 rounded-2xl border border-[#e5e5e5] bg-[#fafafa] text-[#111111] placeholder:text-[#9ca3af] outline-none transition-all duration-300 focus:bg-white focus:border-black focus:shadow-[0_0_0_5px_rgba(0,0,0,0.05)]"
               />
+
             </div>
 
-      
-            <div className="space-y-1.5">
-              <div className="flex justify-between text-[14px] font-semibold text-[#0f1111]">
-                <span>Contraseña</span>
-              
-              </div>
+            <div>
+
+              <label className="block text-sm font-semibold text-[#111111] mb-3">
+                Número de documento
+              </label>
 
               <input
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                placeholder="********"
-                className="w-full h-11 rounded-md border border-[#a6a6a6] bg-white px-3 text-[15px] text-[#0f1111] placeholder:text-gray-400 shadow-[inset_0_1px_2px_rgba(15,17,17,0.08)] transition focus:outline-none focus:border-[#e77600] focus:ring-3 focus:ring-[#fbd8b4]"
+                onChange={(e) => setDocumento(e.target.value)}
+                type="text"
+                placeholder="Ingrese su documento"
+                className="w-full h-14 px-5 rounded-2xl border border-[#e5e5e5] bg-[#fafafa] text-[#111111] placeholder:text-[#9ca3af] outline-none transition-all duration-300 focus:bg-white focus:border-black focus:shadow-[0_0_0_5px_rgba(0,0,0,0.05)]"
               />
+
             </div>
 
-        
             <button
               type="submit"
-              className="mt-10 w-full py-5 text-2xl rounded-2xl border border-[#f0c14b] bg-gradient-to-b from-[#ffe082] to-[#ffcc4d] text-[#111827] font-bold shadow-md shadow-amber-200/70 transition-all duration-300 hover:-translate-y-0.5 hover:from-[#ffd760] hover:to-[#f6be2d] hover:shadow-lg hover:shadow-amber-300/70 focus:outline-none focus:ring-4 focus:ring-amber-200 active:translate-y-0"
+              className="w-full h-14 rounded-2xl bg-black text-white font-semibold text-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
             >
-              Entrar
+              Iniciar sesión
             </button>
+
           </form>
+
         </div>
+
       </div>
 
       <Footer />
+
     </div>
+
   );
 };
 
