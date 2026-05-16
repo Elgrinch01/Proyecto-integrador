@@ -2,9 +2,16 @@ import Footer from "../components/Footer.jsx";
 import LogoHeader from "../components/LogoHeader.jsx";
 import NavBarHeader from "../components/NavBarHeader.jsx";
 import Card from "../components/Card.jsx";
+import Catalogo from "./Catalogo.jsx";
+import { useNavigate } from "react-router-dom";
+import decoracion1 from "../assets/ChatGPT Image May 16, 2026, 03_30_10 PM.png";
+import decoracion2 from "../assets/ChatGPT Image May 16, 2026, 03_27_22 PM.png";
 import "../App.css";
 
 function Index() {
+
+    const navigate = useNavigate();
+
     return (
         <main className="inicio page-inicio">
 
@@ -17,15 +24,49 @@ function Index() {
 
                 <section className="hero-section">
 
+                    <img
+                        src={decoracion1}
+                        alt="Decoración"
+                        className="hero-decoration deco-1"
+                    />
+
+                    <img
+                        src={decoracion2}
+                        alt="Decoración"
+                        className="hero-decoration deco-2"
+                    />
+
+                    <img
+                        src={decoracion1}
+                        alt="Decoración"
+                        className="hero-decoration deco-3"
+                    />
+
+                    <img
+                        src={decoracion2}
+                        alt="Decoración"
+                        className="hero-decoration deco-4"
+                    />
+
+                    <img
+                        src={decoracion1}
+                        alt="Decoración"
+                        className="hero-decoration deco-5"
+                    />
+
+                    <img
+                        src={decoracion2}
+                        alt="Decoración"
+                        className="hero-decoration deco-6"
+                    />
+
                     <div className="hero-content">
 
-
-                        <h1 >
+                        <h1>
                             Descubre historias que
-                            transforman 
+                            transforman
                             tu imaginación
                         </h1>
-                        
 
                         <p>
                             Explora miles de libros, encuentra tus favoritos
@@ -34,7 +75,10 @@ function Index() {
 
                         <div className="hero-buttons">
 
-                            <button className="hero-btn-primary">
+                            <button
+                                className="hero-btn-primary"
+                                onClick={() => navigate("/catalogo")}
+                            >
                                 Explorar Libros
                             </button>
 

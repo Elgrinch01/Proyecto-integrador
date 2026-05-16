@@ -7,7 +7,7 @@ function Footer() {
 
                 <div className="footer-brand">
 
-                    <h2>Bibliobooked</h2>
+                    <h2>Bibooked</h2>
 
                     <p>
                         Explora nuevas historias y disfruta

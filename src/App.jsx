@@ -1,17 +1,43 @@
 import { Routes, Route } from 'react-router-dom'
 import Index from './pages/Index'
 import Reserva from './pages/Reserva'
-import './App.css'
+import Catalogo from './pages/Catalogo'
 import Login from './pages/Login'
+import './App.css'
 
 function App() {
+
   return (
+
     <Routes>
-      <Route path="/" element={<Index />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/Index" element={<Index />} />
-      <Route path="/reserva" element={<Reserva />} />
+
+      <Route
+        path="/"
+        element={<Index />}
+      />
+
+      <Route
+        path="/login"
+        element={<Login />}
+      />
+
+      <Route
+        path="/Index"
+        element={<Index />}
+      />
+
+      <Route
+        path="/reserva"
+        element={<Reserva />}
+      />
+
+      <Route
+        path="/catalogo"
+        element={<Catalogo />}
+      />
+
     </Routes>
+
   )
 }
 

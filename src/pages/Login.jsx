@@ -10,6 +10,9 @@ import {
 import Footer from "../components/Footer.jsx";
 import NavBarHeader from "../components/NavBarHeader.jsx";
 
+import decoracion1 from "../assets/ChatGPT Image May 16, 2026, 03_30_10 PM.png";
+import decoracion2 from "../assets/ChatGPT Image May 16, 2026, 03_27_22 PM.png";
+
 const Login = () => {
 
   const [getEmail, setEmail] = useState("");
@@ -95,6 +98,42 @@ const Login = () => {
       <NavBarHeader hideButtons />
 
       <div className="flex-1 flex items-center justify-center px-6 py-16 relative">
+
+        <img
+          src={decoracion1}
+          alt="Decoración"
+          className="absolute top-[40px] left-[30px] w-[280px] opacity-30 rotate-[-18deg] pointer-events-none"
+        />
+
+        <img
+          src={decoracion2}
+          alt="Decoración"
+          className="absolute top-[120px] right-[40px] w-[240px] opacity-30 rotate-[12deg] pointer-events-none"
+        />
+
+        <img
+          src={decoracion1}
+          alt="Decoración"
+          className="absolute bottom-[60px] left-[80px] w-[220px] opacity-30 rotate-[20deg] pointer-events-none"
+        />
+
+        <img
+          src={decoracion2}
+          alt="Decoración"
+          className="absolute bottom-[40px] right-[70px] w-[260px] opacity-30 rotate-[-10deg] pointer-events-none"
+        />
+
+        <img
+          src={decoracion1}
+          alt="Decoración"
+          className="absolute top-[50%] left-[-40px] w-[180px] opacity-30 rotate-[-30deg] pointer-events-none"
+        />
+
+        <img
+          src={decoracion2}
+          alt="Decoración"
+          className="absolute top-[52%] right-[-30px] w-[190px] opacity-30 rotate-[18deg] pointer-events-none"
+        />
 
         <div className="absolute top-[-120px] right-[-120px] w-[420px] h-[420px] rounded-full bg-black/5 blur-3xl"></div>
 

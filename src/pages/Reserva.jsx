@@ -169,7 +169,7 @@ function Reserva() {
                     <div className="reserva-top">
 
                         <span className="reserva-badge">
-                            Biblioteca digital
+                            Bibooked
                         </span>
 
                         <h1>
