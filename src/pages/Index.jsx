@@ -82,10 +82,6 @@ function Index() {
                                 Explorar Libros
                             </button>
 
-                            <button className="hero-btn-secondary">
-                                Categorías
-                            </button>
-
                         </div>
 
                     </div>

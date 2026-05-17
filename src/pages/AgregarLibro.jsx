@@ -14,25 +14,30 @@ const AgregarLibro = () => {
   const [titulo, setTitulo] = useState("");
   const [autor, setAutor] = useState("");
   const [genero, setGenero] = useState("");
-  const [editorial, setEditorial] = useState("");
+  const [imagen, setImagen] = useState("");
+  const [editoriales, setEditoriales] = useState([]);
+  const [editorialId, setEditorialId] = useState("");
 
   useEffect(() => {
     const storedUser = getLocalStorage("user");
     const storedToken = getLocalStorage("token");
 
     if (!storedUser || !storedToken || storedUser.token !== storedToken) {
-      redirect(
-        "Debes iniciar sesión para agregar libros",
-        "/login",
-        "error"
-      );
+      redirect("Debes iniciar sesión para agregar libros", "/login", "error");
     }
+  }, []);
+
+  useEffect(() => {
+    fetch("http://localhost:8080/editoriales")
+      .then((res) => res.json())
+      .then((data) => setEditoriales(data))
+      .catch((err) => console.error(err));
   }, []);
 
   function handleAddBook() {
 
-    if (!titulo || !autor) {
-      redirect("Completa título y autor", "/agregar-libro", "error");
+    if (!titulo || !autor || !editorialId) {
+      redirect("Completa los campos obligatorios", "/agregar-libro", "error");
       return;
     }
 
@@ -43,19 +48,24 @@ const AgregarLibro = () => {
         nombre: titulo,
         autor,
         genero,
-        editorial: { nombreEditorial: editorial }
+        imagen,
+        editorial: {
+          editorialId: Number(editorialId)
+        }
       })
     })
-      .then((res) => {
-        if (!res.ok) throw new Error("Error creando libro");
+      .then(async (res) => {
+        if (!res.ok) {
+          const error = await res.text();
+          throw new Error(error);
+        }
         return res.json();
       })
       .then(() => {
-        redirect("Libro agregado", "/catalogo", "success");
+        redirect("Libro agregado correctamente", "/catalogo", "success");
       })
-      .catch((err) => {
-        console.error(err);
-        redirect("No se pudo agregar el libro", "/agregar-libro", "error");
+      .catch(() => {
+        redirect("Error al agregar libro", "/agregar-libro", "error");
       });
   }
 
@@ -65,50 +75,103 @@ const AgregarLibro = () => {
       <NavBarHeader />
 
       <div className="flex-1 flex items-center justify-center px-6 py-16 relative">
-        <img src={decoracion1} alt="Decoración" className="absolute top-[40px] left-[30px] w-[280px] opacity-30 rotate-[-18deg] pointer-events-none" />
-        <img src={decoracion2} alt="Decoración" className="absolute top-[120px] right-[40px] w-[240px] opacity-30 rotate-[12deg] pointer-events-none" />
+
+        <img src={decoracion1} className="absolute top-[40px] left-[30px] w-[280px] opacity-30 rotate-[-18deg] pointer-events-none" />
+        <img src={decoracion2} className="absolute top-[120px] right-[40px] w-[240px] opacity-30 rotate-[12deg] pointer-events-none" />
 
         <div className="w-full max-w-md relative z-10">
 
           <div className="mb-10 text-center">
-            <span className="inline-block px-5 py-2 rounded-full bg-white shadow-md text-sm font-semibold text-[#111111] mb-6">Agregar Libro</span>
-            <h2 className="text-4xl font-black text-[#111111] leading-tight mb-4">Nuevo libro</h2>
-            <p className="text-[#666666] text-base leading-7">Rellena la información del libro para añadirlo al catálogo.</p>
+            <span className="inline-block px-5 py-2 rounded-full bg-white shadow-md text-sm font-semibold">
+              Agregar Libro
+            </span>
+            <h2 className="text-4xl font-black">Nuevo libro</h2>
+            <p className="text-[#666]">Completa la información del libro</p>
           </div>
 
-          <form className="bg-white rounded-[32px] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.08)] border border-black/5 space-y-5" onSubmit={(e) => { e.preventDefault(); handleAddBook(); }}>
+          <form
+            className="bg-white rounded-[32px] p-8 shadow-[0_20px_50px_rgba(0,0,0,0.08)] space-y-5"
+            onSubmit={(e) => {
+              e.preventDefault();
+              handleAddBook();
+            }}
+          >
 
             <div>
-              <label className="block text-sm font-semibold text-[#111111] mb-2">Título</label>
-              <input onChange={(e) => setTitulo(e.target.value)} type="text" placeholder="Título del libro" className="w-full h-12 px-4 rounded-xl border border-[#e5e5e5] bg-[#fafafa]" />
+              <label className="block text-sm font-semibold mb-2">
+                Título
+              </label>
+              <input
+                onChange={(e) => setTitulo(e.target.value)}
+                type="text"
+                className="w-full h-12 px-4 rounded-xl border"
+                placeholder="Título del libro"
+              />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-[#111111] mb-2">Autor</label>
-              <input onChange={(e) => setAutor(e.target.value)} type="text" placeholder="Autor" className="w-full h-12 px-4 rounded-xl border border-[#e5e5e5] bg-[#fafafa]" />
+              <label className="block text-sm font-semibold mb-2">
+                Autor
+              </label>
+              <input
+                onChange={(e) => setAutor(e.target.value)}
+                type="text"
+                className="w-full h-12 px-4 rounded-xl border"
+                placeholder="Autor"
+              />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-[#111111] mb-2">Género</label>
-              <input onChange={(e) => setGenero(e.target.value)} type="text" placeholder="Género" className="w-full h-12 px-4 rounded-xl border border-[#e5e5e5] bg-[#fafafa]" />
+              <label className="block text-sm font-semibold mb-2">
+                Género
+              </label>
+              <input
+                onChange={(e) => setGenero(e.target.value)}
+                type="text"
+                className="w-full h-12 px-4 rounded-xl border"
+                placeholder="Género"
+              />
             </div>
 
             <div>
-              <label className="block text-sm font-semibold text-[#111111] mb-2">Editorial</label>
-              <input onChange={(e) => setEditorial(e.target.value)} type="text" placeholder="Editorial" className="w-full h-12 px-4 rounded-xl border border-[#e5e5e5] bg-[#fafafa]" />
+              <label className="block text-sm font-semibold mb-2">
+                Editorial
+              </label>
+              <select
+                onChange={(e) => setEditorialId(e.target.value)}
+                className="w-full h-12 px-4 rounded-xl border bg-[#fafafa]"
+              >
+                <option value="">Selecciona editorial</option>
+                {editoriales.map((ed) => (
+                  <option key={ed.editorialId} value={ed.editorialId}>
+                    {ed.nombreEditorial}
+                  </option>
+                ))}
+              </select>
             </div>
 
+            <div>
+              <label className="block text-sm font-semibold mb-2">
+                Portada (URL)
+              </label>
+              <input
+                onChange={(e) => setImagen(e.target.value)}
+                type="text"
+                className="w-full h-12 px-4 rounded-xl border"
+                placeholder="URL de la imagen"
+              />
+            </div>
 
-            <button type="submit" className="w-full h-12 rounded-xl bg-black text-white font-semibold">Agregar libro</button>
+            <button className="w-full h-12 rounded-xl bg-black text-white font-semibold">
+              Agregar libro
+            </button>
 
           </form>
 
         </div>
-
       </div>
 
       <Footer />
-
     </div>
   );
 };

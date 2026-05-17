@@ -2,40 +2,20 @@ import Footer from "../components/Footer";
 import NavBarHeader from "../components/NavBarHeader";
 import LogoHeader from "../components/LogoHeader";
 import { useEffect, useState } from "react";
-import {
-    saveLocalStorage,
-    getLocalStorage
-} from "../helpers/local-storage";
+import { getLocalStorage } from "../helpers/local-storage";
 import { redirect } from "../helpers/alerts";
-
-const end_points = {
-    libros: "https://jsonplaceholder.typicode.com/posts",
-    usuarios: "https://jsonplaceholder.typicode.com/users",
-};
+import { end_points } from "../services/api";
 
 function Reserva() {
 
     const [getUsuario, setUsuario] = useState("");
-    const [getLibro, setLibro] = useState("");
     const [getFechaReserva, setFechaReserva] = useState("");
     const [getFechaDevolucion, setFechaDevolucion] = useState("");
     const [getLugar, setLugar] = useState("");
-    const [getDireccion, setDireccion] = useState("");
-    const [getLibros, setLibros] = useState([]);
-    const [getUsuarios, setUsuarios] = useState([]);
 
-    function fetchBooks() {
-
-        fetch(end_points.libros)
-            .then((r) => r.json())
-            .then((d) => setLibros(d))
-            .catch((e) => console.log(e));
-
-        fetch(end_points.usuarios)
-            .then((r) => r.json())
-            .then((d) => setUsuarios(d))
-            .catch((e) => console.log(e));
-    }
+    const [busquedaLibro, setBusquedaLibro] = useState("");
+    const [resultadosLibros, setResultadosLibros] = useState([]);
+    const [libroSeleccionado, setLibroSeleccionado] = useState(null);
 
     useEffect(() => {
 
@@ -43,107 +23,90 @@ function Reserva() {
         const storedToken = getLocalStorage("token");
 
         if (!storedUser || !storedToken || storedUser.token !== storedToken) {
-
-            redirect(
-                "Debes iniciar sesión para hacer una reserva",
-                "/login",
-                "error"
-            );
-
+            redirect("Debes iniciar sesión para hacer una reserva", "/login", "error");
             return;
         }
 
-        setUsuario(
-            storedUser.nombre ||
-            storedUser.name ||
-            storedUser.email
-        );
-
-        fetchBooks();
+        setUsuario(storedUser);
 
     }, []);
 
-    const findUsuario = () =>
-        getUsuarios.find(
-            (item) =>
-                getUsuario === item.name ||
-                getUsuario === item.email
-        );
+    useEffect(() => {
 
-    const findLibro = () =>
-        getLibros.find(
-            (item) =>
-                getLibro.toLowerCase() === item.title?.toLowerCase()
-        );
-
-    function enviarReserva() {
-
-        const user = findUsuario();
-        const libro = findLibro();
-
-        if (!user) {
-
-            redirect(
-                "El usuario no fue encontrado",
-                "/reserva",
-                "error"
-            );
-
+        if (busquedaLibro.trim() === "") {
+            setResultadosLibros([]);
             return;
         }
 
-        if (!libro) {
+        const buscar = async () => {
+            try {
+                const res = await fetch(
+                    `${end_points.libros}/buscar?nombre=${busquedaLibro}`
+                );
 
-            redirect(
-                "El libro no fue encontrado",
-                "/reserva",
-                "error"
-            );
+                const data = await res.json();
+                setResultadosLibros(data);
 
+            } catch (err) {
+                console.log(err);
+            }
+        };
+
+        buscar();
+
+    }, [busquedaLibro]);
+
+    function seleccionarLibro(libro) {
+        setLibroSeleccionado(libro);
+        setBusquedaLibro(libro.nombre);
+        setResultadosLibros([]);
+    }
+
+    function enviarReserva() {
+
+        if (!libroSeleccionado) {
+            redirect("Selecciona un libro", "/reserva", "error");
             return;
         }
 
         if (!getFechaReserva || !getFechaDevolucion) {
-
-            redirect(
-                "Completa las fechas de reserva",
-                "/reserva",
-                "error"
-            );
-
+            redirect("Completa las fechas de reserva", "/reserva", "error");
             return;
         }
 
         if (!getLugar) {
-
-            redirect(
-                "Selecciona el lugar de recogida",
-                "/reserva",
-                "error"
-            );
-
+            redirect("Selecciona el lugar de recogida", "/reserva", "error");
             return;
         }
 
+        const storedUser = getLocalStorage("user");
+
         const reserva = {
-            usuario: user,
-            libro: libro,
-            fechaReserva: getFechaReserva,
+            usuarioId: storedUser.usuarioId,
+            libroId: libroSeleccionado.libroId,
+            fechaPrestamo: getFechaReserva,
             fechaDevolucion: getFechaDevolucion,
-            lugar: getLugar,
-            direccion:
-                getLugar === "domicilio"
-                    ? getDireccion
-                    : null,
+            tipoReserva: getLugar
         };
 
-        saveLocalStorage("reserva", reserva);
-
-        redirect(
-            "Reserva realizada con éxito",
-            "/index",
-            "success"
-        );
+        fetch(end_points.reservas, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(reserva)
+        })
+        .then(res => {
+            if (!res.ok) throw new Error("Error creando reserva");
+            return res.json();
+        })
+        .then(() => {
+            redirect("Reserva realizada con éxito", "/index", "success");
+        })
+        .catch(err => {
+            console.log(err);
+            redirect("Error al crear reserva", "/reserva", "error");
+        });
     }
 
     return (
@@ -151,13 +114,8 @@ function Reserva() {
         <main className="page-reserva">
 
             <header className="header">
-
-                <div>
-                    <LogoHeader />
-                </div>
-
+                <LogoHeader />
                 <NavBarHeader />
-
             </header>
 
             <section className="reserva-section">
@@ -167,10 +125,6 @@ function Reserva() {
                 <div className="reserva-container">
 
                     <div className="reserva-top">
-
-                        <span className="reserva-badge">
-                            Bibooked
-                        </span>
 
                         <h1>
                             Reserva tu próximo
@@ -188,132 +142,90 @@ function Reserva() {
 
                         <div className="input-group">
 
-                            <label>
-                                Usuario
-                            </label>
+                            <label>Usuario</label>
 
                             <input
                                 type="text"
-                                placeholder="Nombre o correo"
-                                value={getUsuario}
-                                onChange={(e) =>
-                                    setUsuario(e.target.value)
-                                }
+                                value={getUsuario.nombre || getUsuario.email || ""}
+                                readOnly
                             />
 
                         </div>
 
                         <div className="input-group">
 
-                            <label>
-                                Libro a reservar
-                            </label>
+                            <label>Libro a reservar</label>
 
                             <input
                                 type="text"
-                                placeholder="Título del libro"
-                                onChange={(e) =>
-                                    setLibro(e.target.value)
-                                }
+                                placeholder="Buscar libro..."
+                                value={busquedaLibro}
+                                onChange={(e) => setBusquedaLibro(e.target.value)}
                             />
+
+                            {resultadosLibros.length > 0 && (
+                                <div className="search-results">
+                                    {resultadosLibros.map((libro) => (
+                                        <div
+                                            key={libro.libroId}
+                                            className="search-item"
+                                            onClick={() => seleccionarLibro(libro)}
+                                        >
+                                            {libro.nombre} - {libro.autor}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
 
                         </div>
 
                         <div className="double-input">
 
                             <div className="input-group">
-
-                                <label>
-                                    Fecha de reserva
-                                </label>
-
+                                <label>Fecha de reserva</label>
                                 <input
                                     type="date"
-                                    onChange={(e) =>
-                                        setFechaReserva(e.target.value)
-                                    }
+                                    onChange={(e) => setFechaReserva(e.target.value)}
                                 />
-
                             </div>
 
                             <div className="input-group">
-
-                                <label>
-                                    Fecha devolución
-                                </label>
-
+                                <label>Fecha devolución</label>
                                 <input
                                     type="date"
-                                    onChange={(e) =>
-                                        setFechaDevolucion(e.target.value)
-                                    }
+                                    onChange={(e) => setFechaDevolucion(e.target.value)}
                                 />
-
                             </div>
 
                         </div>
 
                         <div className="radio-section">
 
-                            <p>
-                                Lugar de recogida
-                            </p>
+                            <p>Lugar de recogida</p>
 
                             <div className="radio-options">
 
                                 <label>
-
                                     <input
                                         type="radio"
                                         name="lugar"
-                                        value="biblioteca"
-                                        onChange={() =>
-                                            setLugar("biblioteca")
-                                        }
+                                        onChange={() => setLugar("biblioteca")}
                                     />
-
                                     Retiro en biblioteca
-
                                 </label>
 
                                 <label>
-
                                     <input
                                         type="radio"
                                         name="lugar"
-                                        value="domicilio"
-                                        onChange={() =>
-                                            setLugar("domicilio")
-                                        }
+                                        onChange={() => setLugar("domicilio")}
                                     />
-
                                     A domicilio
-
                                 </label>
 
                             </div>
 
                         </div>
-
-                        {getLugar === "domicilio" && (
-
-                            <div className="input-group">
-
-                                <label>
-                                    Dirección
-                                </label>
-
-                                <input
-                                    type="text"
-                                    placeholder="Calle 13 #30-45"
-                                    onChange={(e) =>
-                                        setDireccion(e.target.value)
-                                    }
-                                />
-
-                            </div>
-
-                        )}
 
                         <button
                             className="reserva-btn"

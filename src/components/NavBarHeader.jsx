@@ -115,6 +115,7 @@ const NavBarHeader = ({ hideButtons = false, showSearch = false }) => {
                 <div
                   key={libro.libroId}
                   className="search-item"
+                  onClick={() => navigate(`/libro/${libro.libroId}`)}
                 >
                   {libro.nombre}
                 </div>
@@ -133,21 +134,7 @@ const NavBarHeader = ({ hideButtons = false, showSearch = false }) => {
 
         <>
 
-          <nav className={`nav-links ${menuOpen ? "active" : ""}`}>
-
-            <button
-              className="nav-btn nav-btn-secondary"
-              onClick={() => navigate("/agregar-libro")}
-            >
-              Agregar Libro
-            </button>
-
-            <button
-              className="nav-btn nav-btn-secondary"
-              onClick={() => navigate("/reserva")}
-            >
-              Reservar
-            </button>
+          <nav className="nav-links">
 
             <button
               className="nav-btn nav-btn-primary"
@@ -170,6 +157,28 @@ const NavBarHeader = ({ hideButtons = false, showSearch = false }) => {
             </button>
 
             <div className={`mobile-menu-dropdown ${menuOpen ? "open" : ""}`}>
+
+              <button
+                type="button"
+                className="mobile-menu-dropdown-btn"
+                onClick={() => {
+                  navigate("/agregar-libro");
+                  setMenuOpen(false);
+                }}
+              >
+                Agregar Libro
+              </button>
+
+              <button
+                type="button"
+                className="mobile-menu-dropdown-btn"
+                onClick={() => {
+                  navigate("/reserva");
+                  setMenuOpen(false);
+                }}
+              >
+                Reservar
+              </button>
 
               <button
                 type="button"
