@@ -3,6 +3,7 @@ import Login from "../pages/Login";
 import Index from "../pages/Index";
 import Reserva from "../pages/Reserva";
 import Catalogo from "../pages/Catalogo";
+import Registro from "../pages/Registro";
 
 export const routerApp = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ export const routerApp = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/registro",
+    element: <Registro />,
   },
   {
     path: "/reserva",

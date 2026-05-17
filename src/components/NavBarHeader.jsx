@@ -74,6 +74,13 @@ const NavBarHeader = ({ hideButtons = false, showSearch = false }) => {
     navigate("/login");
   }
 
+  function handleCreateAccount() {
+
+    setMenuOpen(false);
+
+    navigate("/registro");
+  }
+
   return (
 
     <header className="nav-bar-header">
@@ -144,11 +151,29 @@ const NavBarHeader = ({ hideButtons = false, showSearch = false }) => {
 
           </nav>
 
-          <div
-            className="mobile-menu"
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            ☰
+          <div className="mobile-menu-wrapper">
+
+            <button
+              type="button"
+              className="mobile-menu"
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Abrir menú"
+            >
+              ☰
+            </button>
+
+            <div className={`mobile-menu-dropdown ${menuOpen ? "open" : ""}`}>
+
+              <button
+                type="button"
+                className="mobile-menu-dropdown-btn"
+                onClick={handleCreateAccount}
+              >
+                Crear Cuenta
+              </button>
+
+            </div>
+
           </div>
 
         </>
