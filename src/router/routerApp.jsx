@@ -4,6 +4,7 @@ import Index from "../pages/Index";
 import Reserva from "../pages/Reserva";
 import Catalogo from "../pages/Catalogo";
 import Registro from "../pages/Registro";
+import AgregarLibro from "../pages/AgregarLibro";
 
 export const routerApp = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ export const routerApp = createBrowserRouter([
   {
     path: "/registro",
     element: <Registro />,
+  },
+  {
+    path: "/agregar-libro",
+    element: <AgregarLibro />,
   },
   {
     path: "/reserva",

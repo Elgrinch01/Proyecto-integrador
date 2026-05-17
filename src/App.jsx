@@ -4,6 +4,7 @@ import Reserva from './pages/Reserva'
 import Catalogo from './pages/Catalogo'
 import Login from './pages/Login'
 import Registro from './pages/Registro'
+import AgregarLibro from './pages/AgregarLibro'
 import './App.css'
 
 function App() {
@@ -25,6 +26,11 @@ function App() {
       <Route
         path="/registro"
         element={<Registro />}
+      />
+
+      <Route
+        path="/agregar-libro"
+        element={<AgregarLibro />}
       />
 
       <Route

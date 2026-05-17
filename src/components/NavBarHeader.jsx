@@ -137,6 +137,13 @@ const NavBarHeader = ({ hideButtons = false, showSearch = false }) => {
 
             <button
               className="nav-btn nav-btn-secondary"
+              onClick={() => navigate("/agregar-libro")}
+            >
+              Agregar Libro
+            </button>
+
+            <button
+              className="nav-btn nav-btn-secondary"
               onClick={() => navigate("/reserva")}
             >
               Reservar

@@ -449,12 +449,12 @@
   transition: 0.3s;
 }
 
-.nav-btn:first-child {
+.nav-btn-secondary {
   background: #ece8df;
   color: #111111;
 }
 
-.nav-btn:last-child {
+.nav-btn-primary {
   background: #111111;
   color: white;
 }
