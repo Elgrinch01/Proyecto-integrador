@@ -6,6 +6,7 @@ import Login from './pages/Login'
 import Registro from './pages/Registro'
 import AgregarLibro from './pages/AgregarLibro'
 import './App.css'
+import MisReservas from './pages/MisReservas'
 
 
 function App() {
@@ -47,6 +48,10 @@ function App() {
       <Route
         path="/catalogo"
         element={<Catalogo />}
+      />
+      <Route
+        path="/mi-reserva"
+        element={<MisReservas />}
       />
 
     </Routes>

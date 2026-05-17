@@ -1148,3 +1148,204 @@
   color: #ffffff;
   transform: translateY(-2px);
 }
+
+.mis-reservas-page {
+    min-height: 100vh;
+    padding: 180px 50px 120px;
+    background:
+        linear-gradient(
+            to bottom,
+            #f8f6f1,
+            #f2efe8
+        );
+
+    position: relative;
+    overflow: hidden;
+}
+
+.mis-reservas-page::before {
+    content: "";
+
+    position: absolute;
+
+    width: 500px;
+    height: 500px;
+
+    background: rgba(0,0,0,0.03);
+
+    border-radius: 999px;
+
+    top: -180px;
+    right: -150px;
+
+    filter: blur(60px);
+}
+
+.mis-reservas-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.mis-reservas-badge {
+    display: inline-block;
+
+    padding: 10px 22px;
+
+    background: white;
+
+    border-radius: 999px;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.06);
+}
+
+.mis-reservas-header h1 {
+    font-size: 58px;
+    font-weight: 900;
+
+    color: #111111;
+
+    margin-bottom: 20px;
+}
+
+.mis-reservas-header p {
+    max-width: 700px;
+
+    margin: auto;
+
+    color: #666666;
+
+    line-height: 1.8;
+
+    font-size: 17px;
+}
+
+.reservas-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(300px, 1fr)
+        );
+
+    gap: 30px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.reserva-card {
+    background: white;
+
+    border-radius: 30px;
+
+    padding: 30px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,0.06);
+
+    border:
+        1px solid rgba(0,0,0,0.04);
+
+    transition: 0.35s ease;
+}
+
+.reserva-card:hover {
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+        0 25px 60px rgba(0,0,0,0.10);
+}
+
+.reserva-top {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.estado-badge {
+    background: black;
+    color: white;
+
+    padding: 8px 16px;
+
+    border-radius: 999px;
+
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.reserva-card h2 {
+    font-size: 28px;
+    font-weight: 800;
+
+    color: #111111;
+
+    margin-bottom: 25px;
+
+    line-height: 1.3;
+}
+
+.reserva-info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.reserva-info p {
+    color: #555555;
+    font-size: 15px;
+    line-height: 1.7;
+}
+
+.mis-reservas-empty {
+    text-align: center;
+
+    padding: 120px 20px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.mis-reservas-empty h2 {
+    font-size: 36px;
+    font-weight: 800;
+
+    margin-bottom: 20px;
+
+    color: #111111;
+}
+
+.mis-reservas-empty p {
+    color: #666666;
+    font-size: 17px;
+}
+
+@media (max-width: 768px) {
+
+    .mis-reservas-page {
+        padding:
+            150px 20px 100px;
+    }
+
+    .mis-reservas-header h1 {
+        font-size: 42px;
+    }
+
+    .reserva-card {
+        padding: 24px;
+    }
+
+    .reserva-card h2 {
+        font-size: 22px;
+    }
+}

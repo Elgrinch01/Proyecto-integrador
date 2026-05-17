@@ -188,6 +188,17 @@ const NavBarHeader = ({ hideButtons = false, showSearch = false }) => {
                 Crear Cuenta
               </button>
 
+              <button
+                type="button"
+                className="mobile-menu-dropdown-btn"
+                onClick={() => {
+                  navigate("/mi-reserva");
+                  setMenuOpen(false);
+                }}
+              >
+                Mis Reservas
+              </button>
+
             </div>
 
           </div>
