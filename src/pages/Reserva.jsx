@@ -127,8 +127,8 @@ function Reserva() {
                     <div className="reserva-top">
 
                         <h1>
-                            Reserva tu próximo
-                            <span> libro </span>
+                            <span>Reserva tu próximo 
+                             libro </span>
                         </h1>
 
                         <p>

@@ -1,10 +1,15 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import Footer from "../components/Footer";
 import LogoHeader from "../components/LogoHeader";
 import NavBarHeader from "../components/NavBarHeader";
+
 import "../App.css";
 
 function Catalogo() {
+
+    const navigate = useNavigate();
 
     const [libros, setLibros] = useState([]);
 
@@ -66,6 +71,7 @@ function Catalogo() {
             <div
               className="catalogo-card"
               key={libro.libroId}
+              onClick={() => navigate(`/vistalibro/${libro.libroId}`)}
             >
 
               <img
@@ -77,21 +83,6 @@ function Catalogo() {
               <div className="catalogo-info">
 
                 <h2>{libro.nombre}</h2>
-
-                <p>
-                  <strong>Autor:</strong>{" "}
-                  {libro.autor}
-                </p>
-
-                <p>
-                  <strong>Género:</strong>{" "}
-                  {libro.genero}
-                </p>
-
-                <p>
-                  <strong>Editorial:</strong>{" "}
-                  {libro.editorial?.nombreEditorial}
-                </p>
 
               </div>
 

@@ -35,7 +35,6 @@ function MisReservas() {
                 return;
             }
 
-           
             const responseReservas = await fetch(
                 end_points.reservas
             );
@@ -43,7 +42,6 @@ function MisReservas() {
             const dataReservas =
                 await responseReservas.json();
 
-          
             const responseReservaLibros =
                 await fetch(
                     end_points.reservaLibros
@@ -52,17 +50,6 @@ function MisReservas() {
             const dataReservaLibros =
                 await responseReservaLibros.json();
 
-            console.log(
-                "RESERVAS:",
-                dataReservas
-            );
-
-            console.log(
-                "RESERVA LIBROS:",
-                dataReservaLibros
-            );
-
-          
             const reservasUsuario =
                 dataReservas
                     .filter(
@@ -74,7 +61,6 @@ function MisReservas() {
                     )
                     .map((reserva) => {
 
-                      
                         const reservaLibro =
                             dataReservaLibros.find(
                                 (item) =>
@@ -104,11 +90,6 @@ function MisReservas() {
 
                     });
 
-            console.log(
-                "RESERVAS FILTRADAS:",
-                reservasUsuario
-            );
-
             setReservas(reservasUsuario);
 
         } catch (error) {
@@ -118,6 +99,70 @@ function MisReservas() {
         } finally {
 
             setLoading(false);
+
+        }
+    }
+
+    async function renovarReserva(reserva) {
+
+        try {
+
+            const hoy =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+
+            const renovacion = {
+
+                reserva: {
+                    reservaId: reserva.reservaId
+                },
+
+                fechaRenovacion: hoy
+
+            };
+
+            const response = await fetch(
+                end_points.renovaciones,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body: JSON.stringify(
+                        renovacion
+                    )
+                }
+            );
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Error renovando"
+                );
+
+            }
+
+            await obtenerReservas();
+
+            redirect(
+                "Reserva renovada correctamente",
+                "/mi-reserva",
+                "success"
+            );
+
+        } catch (error) {
+
+            console.log(error);
+
+            redirect(
+                "No se pudo renovar",
+                "/mi-reserva",
+                "error"
+            );
 
         }
     }
@@ -133,12 +178,6 @@ function MisReservas() {
                     <h1>
                         Mis Reservas
                     </h1>
-
-                    <p>
-                        Aquí puedes ver únicamente
-                        las reservas realizadas
-                        con tu cuenta.
-                    </p>
 
                 </div>
 
@@ -227,6 +266,15 @@ function MisReservas() {
                                         </p>
 
                                     </div>
+
+                                    <button
+                                        className="renovar-btn"
+                                        onClick={() =>
+                                            renovarReserva(reserva)
+                                        }
+                                    >
+                                        Renovar reserva (Agrega 7 días a tu lectura)
+                                    </button>
 
                                 </div>
 

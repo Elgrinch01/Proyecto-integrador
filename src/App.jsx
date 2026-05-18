@@ -5,6 +5,7 @@ import Catalogo from './pages/Catalogo'
 import Login from './pages/Login'
 import Registro from './pages/Registro'
 import AgregarLibro from './pages/AgregarLibro'
+import VistaLibro from './pages/VistaLibro'
 import './App.css'
 import MisReservas from './pages/MisReservas'
 
@@ -53,6 +54,9 @@ function App() {
         path="/mi-reserva"
         element={<MisReservas />}
       />
+      <Route 
+      path="/vistalibro/:id" 
+      element={<VistaLibro />} />
 
     </Routes>
 

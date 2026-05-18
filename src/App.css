@@ -1349,3 +1349,128 @@
         font-size: 22px;
     }
 }
+
+.vista-libro-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(to bottom, #f8f6f1, #f2efe8);
+}
+
+.vista-libro-section {
+  flex: 1;
+  padding: 220px 50px 100px;
+  position: relative;
+}
+
+.vista-libro-container {
+  max-width: 1200px;
+  margin: auto;
+  background: white;
+  border-radius: 30px;
+  padding: 50px;
+  display: flex;
+  gap: 60px;
+  align-items: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
+}
+
+.vista-libro-img-box {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.vista-libro-img {
+  width: 100%;
+  max-width: 380px;
+  border-radius: 20px;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+}
+
+.vista-libro-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.vista-libro-info h1 {
+  font-size: 3rem;
+  color: #222;
+  line-height: 1.1;
+}
+
+.vista-libro-info p {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.7;
+}
+
+.vista-libro-info strong {
+  color: #111;
+}
+
+@media (max-width: 900px) {
+
+  .vista-libro-container {
+    flex-direction: column;
+    padding: 35px;
+    gap: 40px;
+  }
+
+  .vista-libro-info h1 {
+    font-size: 2.2rem;
+    text-align: center;
+  }
+
+  .vista-libro-info p {
+    text-align: center;
+  }
+
+}
+
+@media (max-width: 600px) {
+
+  .vista-libro-section {
+    padding: 180px 20px 80px;
+  }
+
+  .vista-libro-container {
+    padding: 25px;
+    border-radius: 20px;
+  }
+
+  .vista-libro-img {
+    max-width: 260px;
+  }
+
+  .vista-libro-info h1 {
+    font-size: 1.8rem;
+  }
+
+  .vista-libro-info p {
+    font-size: 1rem;
+  }
+
+}
+
+.renovar-btn {
+  width: 100%;
+  margin-top: 20px;
+  padding: 12px;
+  border: none;
+  border-radius: 12px;
+  background: #111827;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.renovar-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}

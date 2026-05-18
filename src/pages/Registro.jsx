@@ -14,6 +14,7 @@ const Registro = () => {
   const [nombre, setNombre] = useState("");
   const [correo, setCorreo] = useState("");
   const [documento, setDocumento] = useState("");
+  const [telefono, setTelefono] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [usuarios, setUsuarios] = useState([]);
 
@@ -46,7 +47,7 @@ const Registro = () => {
         item.documento === documento
     );
 
-    if (!nombre || !correo || !documento || !contraseña) {
+    if (!nombre || !correo || !documento || !telefono || !contraseña) {
       redirect(
         "Completa todos los campos para crear la cuenta",
         "/registro",
@@ -73,6 +74,7 @@ const Registro = () => {
         nombre,
         correo,
         documento,
+        telefono,
         contraseña
       })
     })
@@ -140,6 +142,7 @@ const Registro = () => {
               <label className="block text-sm font-semibold text-[#111111] mb-2">
                 Nombre completo
               </label>
+
               <input
                 onChange={(e) => setNombre(e.target.value)}
                 type="text"
@@ -152,6 +155,7 @@ const Registro = () => {
               <label className="block text-sm font-semibold text-[#111111] mb-2">
                 Correo electrónico
               </label>
+
               <input
                 onChange={(e) => setCorreo(e.target.value)}
                 type="email"
@@ -164,6 +168,7 @@ const Registro = () => {
               <label className="block text-sm font-semibold text-[#111111] mb-2">
                 Número de documento
               </label>
+
               <input
                 onChange={(e) => setDocumento(e.target.value)}
                 type="text"
@@ -174,8 +179,22 @@ const Registro = () => {
 
             <div>
               <label className="block text-sm font-semibold text-[#111111] mb-2">
+                Número de teléfono
+              </label>
+
+              <input
+                onChange={(e) => setTelefono(e.target.value)}
+                type="text"
+                placeholder="Ingrese su teléfono"
+                className="w-full h-14 px-5 rounded-2xl border border-[#e5e5e5] bg-[#fafafa] text-[#111111] outline-none focus:bg-white focus:border-black"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-semibold text-[#111111] mb-2">
                 Contraseña
               </label>
+
               <input
                 onChange={(e) => setContraseña(e.target.value)}
                 type="password"
